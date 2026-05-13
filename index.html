@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster | Modern To-Do App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Background Design Elements -->
+        <div class="bg-blob-1"></div>
+        <div class="bg-blob-2"></div>
+        <div class="bg-blob-3"></div>
+        
+        <div class="app">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <h3>Hello, Creator!</h3>
+                    <p>Stay productive today</p>
+                </div>
+
+                <div class="stats-mini">
+                    <div class="stat-mini-item">
+                        <i class="fas fa-calendar-week"></i>
+                        <span id="todayDate"></span>
+                    </div>
+                    <div class="stat-mini-item">
+                        <i class="fas fa-fire"></i>
+                        <span id="streakDisplay">0 day streak</span>
+                    </div>
+                </div>
+
+                <nav class="nav">
+                    <button class="nav-btn active" data-tab="tasks">
+                        <i class="fas fa-list-check"></i>
+                        <span>My Tasks</span>
+                    </button>
+                    <button class="nav-btn" data-tab="analytics">
+                        <i class="fas fa-chart-simple"></i>
+                        <span>Insights</span>
+                    </button>
+                    <button class="nav-btn" data-tab="calendar">
+                        <i class="fas fa-calendar"></i>
+                        <span>Calendar</span>
+                    </button>
+                </nav>
+
+                <div class="quote-box">
+                    <i class="fas fa-quote-left"></i>
+                    <p id="dailyQuote">Small progress is still progress</p>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="main">
+                <!-- Tasks Tab -->
+                <div class="tab-content active" id="tasksTab">
+                    <div class="header">
+                        <h1>
+                            <i class="fas fa-clipboard-list"></i>
+                            Task Dashboard
+                        </h1>
+                        <div class="header-stats">
+                            <div class="header-stat">
+                                <span class="stat-value" id="totalTasksHeader">0</span>
+                                <span class="stat-label">Total</span>
+                            </div>
+                            <div class="header-stat">
+                                <span class="stat-value" id="completedTasksHeader">0</span>
+                                <span class="stat-label">Done</span>
+                            </div>
+                            <div class="header-stat">
+                                <span class="stat-value" id="pendingTasksHeader">0</span>
+                                <span class="stat-label">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Task Card -->
+                    <div class="add-card">
+                        <div class="add-card-header">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create new task</span>
+                        </div>
+                        <div class="add-form">
+                            <input type="text" id="taskInput" placeholder="Write your task...">
+                            <div class="form-row">
+                                <select id="categorySelect">
+                                    <option value="work">💼 Work</option>
+                                    <option value="personal">🧘 Personal</option>
+                                    <option value="shopping">🛍️ Shopping</option>
+                                    <option value="health">🏋️ Health</option>
+                                </select>
+                                <select id="prioritySelect">
+                                    <option value="high">🔴 High</option>
+                                    <option value="medium">🟡 Medium</option>
+                                    <option value="low">🟢 Low</option>
+                                </select>
+                                <input type="datetime-local" id="dueDateTime">
+                                <button id="addBtn">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search & Filter -->
+                    <div class="filter-bar">
+                        <div class="search-wrap">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search tasks...">
+                        </div>
+                        <select id="filterCategory">
+                            <option value="all">All Categories</option>
+                            <option value="work">💼 Work</option>
+                            <option value="personal">🧘 Personal</option>
+                            <option value="shopping">🛍️ Shopping</option>
+                            <option value="health">🏋️ Health</option>
+                        </select>
+                    </div>
+
+                    <!-- Task Boards -->
+                    <div class="boards">
+                        <!-- Pending Board -->
+                        <div class="board">
+                            <div class="board-header pending">
+                                <div class="board-title">
+                                    <i class="fas fa-hourglass-half"></i>
+                                    <h3>In Progress</h3>
+                                </div>
+                                <span class="board-count" id="pendingCount">0</span>
+                            </div>
+                            <div class="board-body" id="pendingTasksList">
+                                <div class="empty-board">
+                                    <i class="fas fa-smile"></i>
+                                    <p>All caught up! 🎉</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Completed Board -->
+                        <div class="board">
+                            <div class="board-header completed">
+                                <div class="board-title">
+                                    <i class="fas fa-check-double"></i>
+                                    <h3>Completed</h3>
+                                </div>
+                                <span class="board-count" id="completedCount">0</span>
+                            </div>
+                            <div class="board-body" id="completedTasksList">
+                                <div class="empty-board">
+                                    <i class="fas fa-trophy"></i>
+                                    <p>Complete tasks to see them here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div class="tab-content" id="analyticsTab">
+                    <div class="header">
+                        <h1>
+                            <i class="fas fa-chart-line"></i>
+                            Productivity Insights
+                        </h1>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="card-title">
+                                <i class="fas fa-chart-pie"></i>
+                                <h3>Task Completion</h3>
+                            </div>
+                            <canvas id="completionChart"></canvas>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                <h3>Category Breakdown</h3>
+                            </div>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Weekly Activity</h3>
+                            </div>
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="card-title">
+                                <i class="fas fa-lightbulb"></i>
+                                <h3>Productivity Tips</h3>
+                            </div>
+                            <ul class="tips-list">
+                                <li><i class="fas fa-check-circle"></i> Complete high priority tasks first</li>
+                                <li><i class="fas fa-check-circle"></i> Take breaks every 45 minutes</li>
+                                <li><i class="fas fa-check-circle"></i> Break large tasks into smaller ones</li>
+                                <li><i class="fas fa-check-circle"></i> Set realistic daily goals</li>
+                                <li><i class="fas fa-check-circle"></i> Celebrate small wins</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Tab -->
+                <div class="tab-content" id="calendarTab">
+                    <div class="header">
+                        <h1>
+                            <i class="fas fa-calendar-alt"></i>
+                            Task Calendar
+                        </h1>
+                    </div>
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button id="prevWeek"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="weekRange"></h3>
+                            <button id="nextWeek"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div id="calendarGrid" class="calendar-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Ring -->
+            <div class="progress-ring">
+                <svg width="80" height="80" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="35" fill="none" stroke="#e0e0e0" stroke-width="4"/>
+                    <circle cx="40" cy="40" r="35" fill="none" stroke="url(#grad)" stroke-width="4" stroke-dasharray="220" stroke-dashoffset="220" id="progressCircle"/>
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="100%" style="stop-color:#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="progress-text">
+                    <span id="progressPercent">0</span>
+                    <small>% done</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <i class="fas fa-pen"></i>
+                <h3>Edit Task</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <input type="text" id="editInput" placeholder="Update your task...">
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" id="saveEditBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <script src="script.js"></script>
+</body>
+</html>
